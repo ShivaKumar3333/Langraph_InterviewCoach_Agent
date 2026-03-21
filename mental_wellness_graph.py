@@ -46,6 +46,7 @@
 #
 # =============================================================================
 
+import sys
 import operator
 import json
 from typing import Annotated
@@ -55,6 +56,7 @@ from pydantic import BaseModel
 from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, START, END
 
+sys.stdout.reconfigure(encoding="utf-8")
 load_dotenv()
 
 
@@ -256,4 +258,22 @@ def run_wellness_check(feeling: str):
 
 
 if __name__ == "__main__":
-    run_wellness_check("I feel stressed and overwhelmed after a long day")
+    print("\n" + "=" * 55)
+    print("  MENTAL WELLNESS PRACTICE SUGGESTER")
+    print("=" * 55)
+    print("\n  Tell me how you're feeling and I'll suggest a")
+    print("  personalized wellness practice just for you.")
+    print("  Type 'quit' to exit.\n")
+
+    while True:
+        feeling = input("  How are you feeling? > ").strip()
+
+        if feeling.lower() in ("quit", "exit", "q"):
+            print("\n  Take care of yourself. Goodbye!\n")
+            break
+
+        if not feeling:
+            continue
+
+        run_wellness_check(feeling)
+        print("\n")
